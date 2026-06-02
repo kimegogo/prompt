@@ -135,7 +135,7 @@
         </div>
       </div>
 
-      <!-- 分類清單區 (行動端水平滾動 / 桌面端垂直滾動) -->
+      <!-- 分類清單區 -->
       <div class="flex-1 overflow-y-auto px-4 py-4 lg:py-6">
         <div class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider px-3 mb-3 hidden lg:block">指令分類</div>
         
@@ -147,7 +147,7 @@
         </nav>
       </div>
 
-      <!-- 底部來源 Google Sheet 連結 (已替換為您指定的 gid 工作表連結) -->
+      <!-- 底部來源 Google Sheet 連結 -->
       <div class="p-4 border-t border-slate-200 dark:border-slate-800/60 hidden lg:block">
         <a class="flex items-center justify-center space-x-2 w-full py-3 px-4 bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-800 rounded-xl text-xs font-medium text-slate-600 dark:text-slate-300 transition-all duration-200" 
            href="https://docs.google.com/spreadsheets/d/1PrY0n0XJG0tVFwsHeU0XIcBMRvT_gx9T6_RG7bDaUMs/edit?gid=1866209349#gid=1866209349" target="_blank">
@@ -162,7 +162,7 @@
     <!-- ── 右側主內容區域 ── -->
     <main class="flex-1 flex flex-col min-h-screen">
 
-      <!-- ── 頂部導航與搜尋列 (Sticky) ── -->
+      <!-- ── 頂部導航與搜尋列 ── -->
       <header class="sticky top-0 bg-slate-50/80 dark:bg-brand-darkBg/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800/60 z-20 px-6 py-4 flex items-center justify-between gap-4">
         
         <!-- 搜尋輸入框 -->
@@ -179,19 +179,17 @@
 
         <!-- 功能控制：主題切換與外部連結 -->
         <div class="flex items-center space-x-3">
-          <!-- 💡 淺色/深色主題切換按鈕 -->
+          <!-- 💡 主題切換 -->
           <button id="themeToggle" class="p-3 rounded-xl bg-white dark:bg-slate-900/90 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 transition-all duration-300 flex items-center justify-center shadow-sm">
-            <!-- 月亮圖示 (淺色模式下顯示，指示點擊可切換至深色) -->
             <svg id="moonIcon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
             </svg>
-            <!-- 太陽圖示 (深色模式下顯示，指示點擊可切換至淺色) -->
             <svg id="sunIcon" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
             </svg>
           </button>
 
-          <!-- 外部連結 (行動端替代顯示) -->
+          <!-- 外部連結 -->
           <a class="hidden sm:flex lg:hidden items-center space-x-1.5 py-2.5 px-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-medium text-slate-600 dark:text-slate-300 shadow-sm" 
              href="https://docs.google.com/spreadsheets/d/1PrY0n0XJG0tVFwsHeU0XIcBMRvT_gx9T6_RG7bDaUMs/edit?gid=1866209349#gid=1866209349" target="_blank">
             <span>📋 資料來源</span>
@@ -249,7 +247,7 @@
 
   <script>
     const SHEET_ID = '1PrY0n0XJG0tVFwsHeU0XIcBMRvT_gx9T6_RG7bDaUMs';
-    const GID = '1866209349'; // 💡 指定您提供的工作表 GID (gid=1866209349)
+    const GID = '1866209349'; // 指定工作表 GID
     const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&gid=${GID}`;
 
     let allData = [];
@@ -262,16 +260,15 @@
     const sunIcon = document.getElementById('sunIcon');
 
     function applyTheme() {
-      // 偵測 localStorage 設定或系統設定，預設採深色 (dark) 確保原版太空感
       if (localStorage.getItem('theme') === 'light' || 
           (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: light)').matches)) {
         document.documentElement.classList.remove('dark');
-        moonIcon.classList.remove('hidden'); // 在白色底顯示月亮圖示 (代表切回深色)
+        moonIcon.classList.remove('hidden'); 
         sunIcon.classList.add('hidden');
       } else {
         document.documentElement.classList.add('dark');
         moonIcon.classList.add('hidden');
-        sunIcon.classList.remove('hidden'); // 在深色底顯示太陽圖示 (代表切回淺色)
+        sunIcon.classList.remove('hidden'); 
       }
     }
 
@@ -284,7 +281,6 @@
       applyTheme();
     });
 
-    // 啟動載入主題設定
     applyTheme();
 
     // CSV 剖析器（支援處理欄位內包含換行與逗號的情境）
@@ -423,7 +419,7 @@
       });
     }
 
-    // 渲染卡片格網
+    // 渲染卡片格網 (已優化結構，移除多餘紅框區域並修正 Prompt 複製對象)
     function renderGrid() {
       const query = searchQuery.toLowerCase();
       const filtered = allData.filter(d => {
@@ -456,30 +452,54 @@
         card.className = 'premium-card bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800/80 rounded-2xl p-5 flex flex-col justify-between h-[360px] opacity-0 animate-[fadeUp_0.4s_ease_forwards] shadow-sm dark:shadow-none';
         card.style.animationDelay = `${Math.min(i, 8) * 35}ms`;
         
+        // 💡 智慧欄位去重與匹配
+        // 如果 `d.body`（內容）與 類別 相同、或者為空，代表該分頁並無拆分獨立「標題」與「內容」，我們直接以 `d.title`（內容）作為 Prompt。
+        const hasTitleAndBody = d.title && d.body && 
+                                d.title.trim() !== '' && 
+                                d.body.trim() !== '' && 
+                                d.body.trim() !== d.category.trim() && 
+                                d.title.trim() !== d.category.trim() && 
+                                d.body.trim() !== d.title.trim();
+
+        let displayTitle = '';
+        let displayPrompt = '';
+
+        if (hasTitleAndBody) {
+          // 情境 A：工作表有獨立的「標題」與「Prompt 內容」
+          displayTitle = d.title;
+          displayPrompt = d.body;
+        } else {
+          // 情境 B：工作表無獨立標題（例如您提供的特定 GID 分頁），挑選長度較長者作為 Prompt 內容
+          displayTitle = '';
+          displayPrompt = d.title.length > d.body.length ? d.title : d.body;
+        }
+        
         card.innerHTML = `
           <div class="flex flex-col h-full justify-between">
-            <div>
+            <div class="flex flex-col overflow-hidden">
               <!-- 頂部標籤 -->
-              <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center justify-between mb-3.5">
                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-semibold bg-indigo-500/10 text-indigo-500 dark:text-indigo-400 border border-indigo-500/20">
                   # ${escHtml(d.category)}
                 </span>
               </div>
               
-              <!-- 標題 -->
-              <h3 class="text-base font-bold text-slate-800 dark:text-white mb-2.5 line-clamp-2 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-200">
-                ${escHtml(d.title)}
-              </h3>
+              <!-- 標題 (只有在存在獨立「標題」欄位時才渲染) -->
+              ${displayTitle ? `
+                <h3 class="text-base font-bold text-slate-800 dark:text-white mb-2 line-clamp-1 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-200">
+                  ${escHtml(displayTitle)}
+                </h3>
+              ` : ''}
               
-              <!-- 內文 -->
-              <div class="text-slate-600 dark:text-slate-400 text-xs leading-relaxed overflow-y-auto max-h-[160px] pr-1 whitespace-pre-wrap select-all font-mono bg-slate-100/60 dark:bg-slate-950/40 p-3 rounded-xl border border-slate-200 dark:border-slate-900 mb-4">
-                ${escHtml(d.body)}
+              <!-- 內文 / Prompt 內容 (直接乾淨地呈現，加上精緻的自適應高度與滾動條，不再使用多餘的灰色底色框框) -->
+              <div class="text-slate-700 dark:text-slate-300 text-sm leading-relaxed overflow-y-auto ${displayTitle ? 'max-h-[160px]' : 'max-h-[220px]'} pr-1.5 whitespace-pre-wrap select-all font-sans mb-4">
+                ${escHtml(displayPrompt)}
               </div>
             </div>
 
             <!-- 底層動作按鈕 -->
             <button class="copy-btn flex items-center justify-center space-x-2 w-full py-2.5 px-4 bg-indigo-600 hover:bg-indigo-500 active:scale-95 text-white text-xs font-bold rounded-xl transition-all duration-200 shadow-md shadow-indigo-600/20" 
-                    data-prompt="${escAttr(d.body)}">
+                    data-prompt="${escAttr(displayPrompt)}">
               <svg class="w-4 h-4 btn-copy-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
               </svg>
@@ -497,7 +517,7 @@
           const promptText = btn.dataset.prompt;
 
           copyText(promptText, () => {
-            // 切換按鈕狀態為「已複製成功」
+            // 一鍵切換按鈕狀態為「已複製成功」
             btn.classList.remove('bg-indigo-600', 'hover:bg-indigo-500');
             btn.classList.add('bg-emerald-600', 'hover:bg-emerald-500');
             textSpan.textContent = '已複製到剪貼簿！';
