@@ -147,10 +147,10 @@
         </nav>
       </div>
 
-      <!-- 底部來源 Google Sheet 連結 -->
+      <!-- 底部來源 Google Sheet 連結 (已替換為您指定的 gid 工作表連結) -->
       <div class="p-4 border-t border-slate-200 dark:border-slate-800/60 hidden lg:block">
         <a class="flex items-center justify-center space-x-2 w-full py-3 px-4 bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-800 rounded-xl text-xs font-medium text-slate-600 dark:text-slate-300 transition-all duration-200" 
-           href="https://docs.google.com/spreadsheets/d/1PrY0n0XJG0tVFwsHeU0XIcBMRvT_gx9T6_RG7bDaUMs/edit?usp=sharing" target="_blank">
+           href="https://docs.google.com/spreadsheets/d/1PrY0n0XJG0tVFwsHeU0XIcBMRvT_gx9T6_RG7bDaUMs/edit?gid=1866209349#gid=1866209349" target="_blank">
           <svg class="w-4 h-4 text-emerald-500" fill="currentColor" viewBox="0 0 24 24">
             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm1.8 14H14v1.8h-1.3V16h-1.8v-1.3h1.8v-1.8H14v1.8h1.8V16zm-5.1-4.7H6v-1.3h4.7v1.3zm2-3.3H6V7h6.7v1zm3.1-3H6V5h9.8v1z"/>
           </svg>
@@ -193,7 +193,7 @@
 
           <!-- 外部連結 (行動端替代顯示) -->
           <a class="hidden sm:flex lg:hidden items-center space-x-1.5 py-2.5 px-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-medium text-slate-600 dark:text-slate-300 shadow-sm" 
-             href="https://docs.google.com/spreadsheets/d/1PrY0n0XJG0tVFwsHeU0XIcBMRvT_gx9T6_RG7bDaUMs/edit?usp=sharing" target="_blank">
+             href="https://docs.google.com/spreadsheets/d/1PrY0n0XJG0tVFwsHeU0XIcBMRvT_gx9T6_RG7bDaUMs/edit?gid=1866209349#gid=1866209349" target="_blank">
             <span>📋 資料來源</span>
           </a>
         </div>
@@ -249,7 +249,8 @@
 
   <script>
     const SHEET_ID = '1PrY0n0XJG0tVFwsHeU0XIcBMRvT_gx9T6_RG7bDaUMs';
-    const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Sheet1`;
+    const GID = '1866209349'; // 💡 指定您提供的工作表 GID (gid=1866209349)
+    const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&gid=${GID}`;
 
     let allData = [];
     let activeCategory = '全部';
@@ -365,7 +366,7 @@
         const btn = document.createElement('button');
         const isActive = cat === activeCategory;
         
-        // 賦予分類微縮圖示 Emoji (可自訂)
+        // 賦予分類微縮圖示 Emoji
         let emoji = '🔮 ';
         if (cat === '全部') emoji = '🚀 ';
         else if (cat.includes('寫作') || cat.includes('文案')) emoji = '📝 ';
@@ -452,7 +453,6 @@
 
       filtered.forEach((d, i) => {
         const card = document.createElement('div');
-        // 加入 bg-white 亮底與 dark:bg-slate-900/40 暗底，以及不同陰影特效支援
         card.className = 'premium-card bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800/80 rounded-2xl p-5 flex flex-col justify-between h-[360px] opacity-0 animate-[fadeUp_0.4s_ease_forwards] shadow-sm dark:shadow-none';
         card.style.animationDelay = `${Math.min(i, 8) * 35}ms`;
         
@@ -471,7 +471,7 @@
                 ${escHtml(d.title)}
               </h3>
               
-              <!-- 內文 (在亮色主題與暗色主題均能清晰顯示的容器) -->
+              <!-- 內文 -->
               <div class="text-slate-600 dark:text-slate-400 text-xs leading-relaxed overflow-y-auto max-h-[160px] pr-1 whitespace-pre-wrap select-all font-mono bg-slate-100/60 dark:bg-slate-950/40 p-3 rounded-xl border border-slate-200 dark:border-slate-900 mb-4">
                 ${escHtml(d.body)}
               </div>
@@ -497,7 +497,7 @@
           const promptText = btn.dataset.prompt;
 
           copyText(promptText, () => {
-            // 一鍵切換按鈕狀態為「已複製成功」
+            // 切換按鈕狀態為「已複製成功」
             btn.classList.remove('bg-indigo-600', 'hover:bg-indigo-500');
             btn.classList.add('bg-emerald-600', 'hover:bg-emerald-500');
             textSpan.textContent = '已複製到剪貼簿！';
@@ -534,7 +534,6 @@
     function fallbackCopy(text, callback) {
       const ta = document.createElement('textarea');
       ta.value = text;
-      // 避免滾動條抖動
       ta.style.position = 'fixed';
       ta.style.opacity = '0';
       document.body.appendChild(ta);
